@@ -15,26 +15,21 @@
 
 @implementation TimerDisplay2Tests
 
-- (void)setUp {
-    [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-}
-
-- (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
-}
-
 - (void)testExample {
-    // This is an example of a functional test case.
-    XCTAssert(YES, @"Pass");
+    XCTAssertEqualObjects(@"00:00", [self formatDuration:0]);
+    XCTAssertEqualObjects(@"00:01", [self formatDuration:1]);
+    XCTAssertEqualObjects(@"00:10", [self formatDuration:10]);
+    XCTAssertEqualObjects(@"00:59", [self formatDuration:59]);
+    XCTAssertEqualObjects(@"01:00", [self formatDuration:60]);
+    XCTAssertEqualObjects(@"60:00", [self formatDuration:60*60]);
 }
 
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
+-(NSString*)formatDuration:(NSTimeInterval)duration
+{
+    NSInteger minutes = (NSInteger)duration / 60;
+    NSInteger seconds = (NSInteger)duration % 60;
+    return [NSString stringWithFormat:@"%02ld:%02ld",
+            minutes, seconds];
 }
 
 @end
